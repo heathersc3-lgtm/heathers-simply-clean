@@ -94,13 +94,13 @@
 <section id="quote" class="section">
   <h2>Get a Quick Quote</h2>
   <p class="sub">Tell me a little about your space and I'll get back to you. Prefer to talk? <a href="tel:+16616521915">Call</a> or <a href="sms:+16616521915">text</a> 661-652-1915.</p>
-  <form class="form" action="https://formsubmit.co/heathersc3@gmail.com" method="POST">
+  <form id="quote-form" class="form" action="https://formsubmit.co/heathersc3@gmail.com" method="POST">
     <input type="hidden" name="_subject" value="New quote request - website">
     <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_captcha" value="true">
+    <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_next" value="https://heathersc3-lgtm.github.io/heathers-simply-clean/thanks.html">
     <input type="hidden" name="_autoresponse" value="Thanks for reaching out to Heather's Simply Clean Co.! I got your quote request and will get back to you soon. If you need me sooner, call or text 661-652-1915. - Heather">
-    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+    <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
     <label>Name<input name="name" required autocomplete="name"></label>
     <label>Phone<input name="phone" type="tel" required autocomplete="tel"></label>
     <label>Email<input name="email" type="email" required autocomplete="email"></label>
@@ -115,7 +115,8 @@
         <option>Home cleaning</option><option>Business / office cleaning</option><option>Retail / commercial cleaning</option><option>Organizing</option><option>Move-in / move-out deep clean</option><option>Not sure yet</option>
       </select></label>
     <label>Message<textarea name="message" rows="4" placeholder="Size of the space, what you need, best time to reach you..."></textarea></label>
-    <button class="btn btn-teal" type="submit">Send Quote Request</button>
+    <p id="form-status" class="status" role="status" hidden></p>
+    <button class="btn btn-teal" type="submit" id="submit-btn">Send Quote Request</button>
   </form>
 </section>
 </main>
@@ -128,5 +129,6 @@
 </footer>
 <a class="fab" href="tel:+16616521915" aria-label="Call Heather">Call Heather</a>
 <script src="js/slider.js"></script>
+<script src="js/form.js"></script>
 </body>
 </html>
