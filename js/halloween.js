@@ -5,7 +5,7 @@
 (function () {
   'use strict';
   // ---- settings -------------------------------------------------------------
-  var SHOW_BANNER = false;                         // set true to show the "10% off closet organizing" banner
+  var SHOW_BANNER = true;                         // set true to show the "10% off closet organizing" banner
   var END = new Date(2026, 9, 31, 23, 59, 59);     // last moment the theme shows (local time; month 9 = October)
   // ---------------------------------------------------------------------------
   var q = location.search;
