@@ -10,7 +10,9 @@
   // ---------------------------------------------------------------------------
   var q = location.search;
   var forced = /[?&]halloween=on\b/.test(q);
-  if (!forced && new Date() > END) return;
+  var td = /[?&]test_date=(\d{4})-(\d{1,2})-(\d{1,2})/.exec(q); // preview/testing override only
+  var now = td ? new Date(+td[1], td[2] - 1, +td[3], 12) : new Date();
+  if (!forced && now > END) return;
   if (/[?&]hwbanner=1\b/.test(q)) SHOW_BANNER = true;
   if (/[?&]hwbanner=0\b/.test(q)) SHOW_BANNER = false;
 

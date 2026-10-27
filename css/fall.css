@@ -1,0 +1,39 @@
+/* Fall add-on for Heather's Simply Clean Co. Everything is scoped to html.fall, which js/fall.js adds ONLY Nov 1-30, 2026
+   (visitor's local time). Outside those dates nothing here applies. */
+.fl-banner,.fl-deco,.fl-garland-wrap{display:none}
+html.fall body{background:#FAF4EA}
+html.fall .fl-banner{display:flex;align-items:center;justify-content:center;gap:.6rem;background:linear-gradient(90deg,#1f3f3c,#2F6F6B 50%,#1f3f3c);color:#FBEBD0;font-family:"DM Serif Display",Georgia,serif;font-size:1.05rem;letter-spacing:.04em;padding:.5rem 1rem;text-align:center;border-bottom:2px solid #C98A3A}
+html.fall .fl-banner svg{flex:none;display:block}
+html.fall .nav{background:rgba(250,244,234,.95);border-bottom:2px solid transparent;border-image:linear-gradient(90deg,#2F6F6B,#C98A3A 40%,#B5401C 65%,#2F6F6B) 1}
+html.fall .hero{position:relative;overflow:hidden;background:linear-gradient(rgba(251,243,230,.86),rgba(250,240,224,.93)),radial-gradient(ellipse at 50% 110%,rgba(217,120,42,.35),transparent 60%),url(../assets/hero.jpg) center/cover}
+html.fall .hero-inner{position:relative;z-index:1}
+html.fall .fl-deco{display:block;position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+html.fall .fl-sprig{position:absolute;top:-6px;width:260px;height:auto;opacity:.95}
+html.fall .fl-sprig.l{left:-14px}
+html.fall .fl-sprig.r{right:-14px;transform:scaleX(-1)}
+html.fall .fl-wind path{stroke:rgba(169,98,40,.38);stroke-width:1.5}
+html.fall .hero h1{color:#1C1C1C}
+html.fall .card div{border-top-color:#C98A3A}
+html.fall .alt{background:#FFFBF4}
+html.fall .ticks li::before{color:#B5401C}
+html.fall .footer{border-top:3px solid #C98A3A}
+html.fall .footer a{color:#F2C27A}
+@media(max-width:600px){html.fall .fl-sprig{width:150px}html.fall .fl-banner{font-size:.95rem}}
+@media(max-width:480px){html.fall .fl-from{display:none}}
+/* falling leaves on the wind */
+html.fall .fl-leaves{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:6}
+html.fall .fl-leaf{position:absolute;top:-8vh;display:block;will-change:transform;animation:flfall var(--d) linear var(--dl) infinite}
+html.fall .fl-leaf i{display:block;animation:flsway var(--sd) ease-in-out var(--dl) infinite alternate}
+html.fall .fl-leaf svg{display:block;animation:flspin var(--d) linear var(--dl) infinite;filter:drop-shadow(0 2px 2px rgba(40,15,5,.18))}
+@keyframes flfall{0%{transform:translate3d(0,0,0)}35%{transform:translate3d(calc(var(--dx)*.25),40vh,0)}50%{transform:translate3d(calc(var(--dx)*.8),58vh,0)}100%{transform:translate3d(var(--dx),118vh,0)}}
+@keyframes flsway{from{transform:translateX(calc(var(--sw)*-1)) rotate(-18deg)}to{transform:translateX(var(--sw)) rotate(22deg)}}
+@keyframes flspin{to{transform:rotate(var(--rot))}}
+html.fall .fl-wind{position:absolute;left:0;top:14%;width:100%;height:46%;opacity:.5}
+html.fall .fl-wind path{stroke-dasharray:150 900;stroke-dashoffset:1050;animation:flgust 9s ease-in-out infinite}
+html.fall .fl-wind .w2{animation-delay:-3s;animation-duration:11s}
+html.fall .fl-wind .w3{animation-delay:-6.5s;animation-duration:10s}
+@keyframes flgust{0%{stroke-dashoffset:1050;opacity:0}15%{opacity:1}70%{opacity:.8}100%{stroke-dashoffset:0;opacity:0}}
+html.fall .fl-garland-wrap{display:flex;justify-content:center;margin:-.6rem 0 .8rem}
+html.fall .fl-garland{max-width:80%;height:auto}
+@media(max-width:600px){html.fall .fl-leaf.fl-x{display:none}html.fall .fl-wind{opacity:.35}}
+@media(prefers-reduced-motion:reduce){html.fall .fl-leaves{display:none}html.fall .fl-wind path{animation:none;stroke-dasharray:none;stroke-dashoffset:0;opacity:.35}}
