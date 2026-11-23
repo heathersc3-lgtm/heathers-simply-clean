@@ -1,13 +1,14 @@
-/* Fall add-on for Heather's Simply Clean Co.: active ONLY Nov 1-30, 2026 (visitor's local time).
-   Before Nov 1 and from Dec 1 this script does nothing and the site looks exactly as it otherwise would.
+/* Fall add-on for Heather's Simply Clean Co.: active ONLY Nov 1-30, 2026 (America/Los_Angeles date).
+   Before Nov 1 and from Dec 1 (Pacific) this script does nothing and the site looks exactly as it otherwise would.
    Remove: delete this file + css/fall.css and the 2 lines in index.html marked "fall".
-   Preview override (testing only): ?test_date=YYYY-MM-DD */
+   Preview override (testing only): ?test_date=YYYY-MM-DD. ?preview=christmas turns this fall add-on off so the themes never overlap. */
 (function(){
   'use strict';
-  var START=new Date(2026,10,1,0,0,0),END=new Date(2026,11,1,0,0,0); // Nov 1 - Nov 30 inclusive, local time
+  if(/[?&]preview=christmas(?:&|$)/i.test(location.search))return;
+  function pacificYMD(d){var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(d),o={};for(var i=0;i<p.length;i++)o[p[i].type]=p[i].value;return o.year+'-'+o.month+'-'+o.day;}
   var now=new Date(),t=/[?&]test_date=(\d{4})-(\d{1,2})-(\d{1,2})/.exec(location.search);
-  if(t)now=new Date(+t[1],t[2]-1,+t[3],12);
-  if(now<START||!(now<END))return;
+  var ymd=t?t[1]+'-'+('0'+t[2]).slice(-2)+'-'+('0'+t[3]).slice(-2):pacificYMD(now);
+  if(ymd<'2026-11-01'||ymd>'2026-11-30')return;
   var root=document.documentElement;root.classList.add('fall');
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   // ---- shared fall helpers (leaves + wind) ----

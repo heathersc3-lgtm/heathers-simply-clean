@@ -1,0 +1,63 @@
+/* Christmas add-on for Heather's Simply Clean Co.
+   Everything is scoped to html.xmas, which js/christmas.js adds ONLY when the
+   America/Los_Angeles date is Dec 1, 2026 through Jan 1, 2027 inclusive.
+   Outside those dates nothing here applies. */
+.xm-banner,.xm-lights,.xm-deco,.xm-foot-snow,.xm-fx,.xm-static-flakes,.xm-nav-cap{display:none}
+
+html.xmas{--xm-pine:#1a4a2c;--xm-cran:#9B1B2E;--xm-gold:#C9A227;--xm-goldlt:#E8C56B;--xm-snow:#F8FBFF}
+html.xmas body{background:#FAF8F4}
+
+html.xmas .xm-banner{display:flex;align-items:center;justify-content:center;gap:.55rem;background:linear-gradient(90deg,#1a4a2c 0%,#8b1e32 42%,#8b1e32 58%,#1a4a2c 100%);box-shadow:inset 0 2px 0 rgba(232,197,107,.4);color:#F8EBC8;font-family:"DM Serif Display",Georgia,serif;font-size:1.05rem;letter-spacing:.04em;padding:.55rem 1rem 1.05rem;text-align:center;position:relative;z-index:11}
+html.xmas .xm-banner svg{flex:none;display:block}
+
+html.xmas .nav{background:rgba(250,248,244,.96);border-bottom:2px solid transparent;border-image:linear-gradient(90deg,#2F6F6B,#C9A227 40%,#9B1B2E 70%,#2F6F6B) 1;overflow:visible}
+
+html.xmas .xm-lights{display:block;position:absolute;left:0;right:0;top:100%;height:30px;pointer-events:none;z-index:12;overflow:visible}
+html.xmas .xm-lights-svg{display:block;width:100%;height:30px;overflow:visible}
+html.xmas .xm-b{transform-box:fill-box;transform-origin:center 0;animation:xmtwinkle 2.8s ease-in-out infinite}
+
+html.xmas .hero{position:relative;overflow:hidden;background:linear-gradient(rgba(248,251,255,.84),rgba(250,248,244,.93)),url(../assets/hero.jpg) center/cover}
+html.xmas .hero-inner{position:relative;z-index:1}
+html.xmas .xm-deco{display:block;position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+html.xmas .xm-holly{position:absolute;top:-4px;width:130px;height:auto;opacity:.95;filter:drop-shadow(0 2px 3px rgba(0,0,0,.12))}
+html.xmas .xm-holly.l{left:-10px}
+html.xmas .xm-holly.r{right:-10px;transform:scaleX(-1)}
+html.xmas .xm-hero-snow{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:72px;display:block;pointer-events:none}
+
+html.xmas h2{color:#1a3d3a}
+html.xmas .card div{border-top-color:#C9A227}
+html.xmas .ticks li::before{color:#9B1B2E}
+html.xmas .footer{background:#141a19;border-top:3px solid #C9A227;position:relative}
+html.xmas .footer a{color:#E8C56B}
+
+html.xmas .xm-fx{display:block;position:fixed;inset:0;pointer-events:none;z-index:6;overflow:hidden}
+html.xmas .xm-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+html.xmas .xm-drift{position:absolute;left:0;right:0;bottom:0;height:48px;pointer-events:none;z-index:1}
+html.xmas .xm-drift-svg{display:block;width:100%;height:100%}
+
+html.xmas .xm-static-flakes{display:none}
+html.xmas-static .xm-static-flakes{display:block;position:fixed;inset:0;pointer-events:none;z-index:6}
+html.xmas-static .xm-static-flakes span{position:absolute;opacity:.7}
+
+@keyframes xmtwinkle{0%,100%{opacity:.62;filter:brightness(.85)}50%{opacity:1;filter:brightness(1.3)}}
+
+
+html.xmas .xm-cap{position:absolute;left:0;right:0;bottom:0;height:16px;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='16' viewBox='0 0 32 16'%3E%3Cpath fill='%23F8FBFF' d='M0 16V9C5-1 11-1 16 9s11 10 16 0V16z'/%3E%3C/svg%3E");background-repeat:repeat-x;background-position:bottom;background-size:32px 16px;display:block}
+html.xmas .xm-banner .xm-cap{z-index:1}
+html.xmas .xm-nav-cap{display:block;position:absolute;left:0;right:0;top:-1px;height:14px;pointer-events:none;z-index:1;overflow:visible}
+html.xmas .xm-nav-cap .xm-cap{top:0;bottom:auto;transform:scaleY(-1);height:14px;background-size:32px 14px}
+html.xmas .xm-foot-snow{display:block;position:absolute;left:0;right:0;top:-15px;height:16px;pointer-events:none;overflow:visible}
+html.xmas .xm-foot-snow .xm-cap{top:0;bottom:auto;transform:scaleY(-1);filter:drop-shadow(0 -1px 0 rgba(201,162,39,.45))}
+
+@media(max-width:600px){
+  html.xmas .xm-banner{font-size:.95rem;letter-spacing:.03em}
+  html.xmas .xm-holly{width:78px}
+  html.xmas .xm-drift{height:32px}
+  html.xmas .xm-hero-snow{height:48px}
+  html.xmas .xm-lights,html.xmas .xm-lights-svg{height:24px}
+}
+@media(max-width:480px){html.xmas .xm-from{display:none}}
+@media(prefers-reduced-motion:reduce){
+  html.xmas .xm-b{animation:none}
+  html.xmas .xm-canvas{display:none}
+}

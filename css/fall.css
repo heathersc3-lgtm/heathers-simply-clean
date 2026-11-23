@@ -1,5 +1,5 @@
 /* Fall add-on for Heather's Simply Clean Co. Everything is scoped to html.fall, which js/fall.js adds ONLY Nov 1-30, 2026
-   (visitor's local time). Outside those dates nothing here applies. */
+   (America/Los_Angeles calendar date). Outside those dates nothing here applies. */
 .fl-banner,.fl-deco,.fl-garland-wrap{display:none}
 html.fall body{background:#FAF4EA}
 html.fall .fl-banner{display:flex;align-items:center;justify-content:center;gap:.6rem;background:linear-gradient(90deg,#1f3f3c,#2F6F6B 50%,#1f3f3c);color:#FBEBD0;font-family:"DM Serif Display",Georgia,serif;font-size:1.05rem;letter-spacing:.04em;padding:.5rem 1rem;text-align:center;border-bottom:2px solid #C98A3A}
