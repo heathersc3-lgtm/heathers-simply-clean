@@ -2,7 +2,7 @@
    Everything is scoped to html.xmas, which js/christmas.js adds ONLY when the
    America/Los_Angeles date is Dec 1, 2026 through Jan 1, 2027 inclusive.
    Outside those dates nothing here applies. */
-.xm-banner,.xm-lights,.xm-deco,.xm-foot-snow,.xm-fx,.xm-nav-cap{display:none}
+.xm-banner,.xm-lights,.xm-deco,.xm-foot-snow,.xm-fx,.xm-nav-cap,.xm-snowmen{display:none}
 
 html.xmas{--xm-pine:#1A3D2C;--xm-wine:#7A1E2B;--xm-gold:#C9A24A;--xm-goldlt:#D4AF6A;--xm-cream:#F6F3EC}
 html.xmas body{background:var(--xm-cream)}
@@ -35,6 +35,11 @@ html.xmas .xm-fx{display:block;position:fixed;inset:0;pointer-events:none;z-inde
 html.xmas .xm-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
 html.xmas .xm-drift{position:absolute;left:0;right:0;bottom:0;height:36px;pointer-events:none;z-index:1}
 html.xmas .xm-drift-svg{display:block;width:100%;height:100%}
+html.xmas .xm-snowmen{display:block;position:absolute;left:0;right:0;bottom:0;height:0;pointer-events:none;z-index:2}
+html.xmas .xm-snowman{position:absolute;bottom:8px;width:64px;height:auto;display:block;transform-origin:50% 94%;animation:xmsway 5.2s ease-in-out infinite alternate}
+html.xmas .xm-snowman.l{left:22px;animation-delay:-1.6s}
+html.xmas .xm-snowman.r{right:22px;animation-delay:-3.4s}
+@keyframes xmsway{from{transform:rotate(-2.4deg)}to{transform:rotate(2.4deg)}}
 
 html.xmas .xm-cap{position:absolute;left:0;right:0;bottom:0;height:10px;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='10' viewBox='0 0 200 10'%3E%3Cpath fill='%23F6F3EC' d='M0 10V6C50 1 100 11 200 6V10Z'/%3E%3C/svg%3E");background-repeat:repeat-x;background-position:bottom;background-size:200px 10px;display:block}
 html.xmas .xm-banner .xm-cap{z-index:1}
@@ -51,9 +56,13 @@ html.xmas .xm-foot-snow .xm-cap{top:0;bottom:auto;transform:scaleY(-1)}
   html.xmas .xm-drift{height:24px}
   html.xmas .xm-hero-snow{height:32px}
   html.xmas .xm-lights,html.xmas .xm-lights-svg{height:24px}
+  html.xmas .xm-snowman{width:50px;bottom:5px}
+  html.xmas .xm-snowman.l{left:10px}
+  html.xmas .xm-snowman.r{display:none}
   html.xmas .xm-banner{gap:.5rem;padding:.38rem .8rem .68rem}
 }
 @media(max-width:480px){html.xmas .xm-from{display:none}}
 @media(prefers-reduced-motion:reduce){
   html.xmas .xm-b{animation:none}
+  html.xmas .xm-snowman{animation:none}
 }
