@@ -1,4 +1,4 @@
-/* Christmas add-on for Heather's Simply Clean Co.: active ONLY when the America/Los_Angeles
+/* Christmas add-on: active ONLY when the America/Los_Angeles
    calendar date is Dec 1, 2026 through Jan 1, 2027 inclusive.
    Outside those dates this script does nothing and the site looks as it otherwise would.
    Preview (testing only): ?preview=christmas  or  ?test_date=YYYY-MM-DD */
@@ -16,7 +16,7 @@
   var root=document.documentElement;root.classList.add('xmas');
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce)root.classList.add('xmas-static');
-  function flakeSVG(sz,color){return '<svg viewBox="0 0 32 32" width="'+sz+'" height="'+sz+'" aria-hidden="true"><g fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round"><path d="M16 2v28M4.4 9l23.2 14M4.4 23 27.6 9"/><path d="M16 6l-3-3M16 6l3-3M16 26l-3 3M16 26l3 3M7.5 10.8l-4 .2M7.5 10.8l-1.5-3.7M24.5 21.2l4-.2M24.5 21.2l1.5 3.7M7.5 21.2l-4-.2M7.5 21.2l-1.5 3.7M24.5 10.8l4 .2M24.5 10.8l1.5-3.7"/></g></svg>';}
+  function ornament(){return '<svg class="xm-orn-svg" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M12 2.2 14 9.8 21.8 12 14 14.2 12 21.8 10 14.2 2.2 12 10 9.8Z" fill="none" stroke="#D4AF6A" stroke-width="1.15" stroke-linejoin="round"/></svg>';}
   function lightsHTML(){
     var colors=['#e8c56b','#c41e3a','#2e8a4a','#f7f1d0','#e8c56b','#c41e3a'];
     var n=28,w=1120,h=[],wire='M0 8';
@@ -27,76 +27,114 @@
     }
     return '<svg class="xm-lights-svg" viewBox="0 0 '+w+' 36" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><path d="'+wire+'" fill="none" stroke="#2a2416" stroke-width="1.4" stroke-linecap="round"/>'+h.join('')+'</svg>';
   }
-  function startSnow(canvas){
+  function startSnow(canvas,stat){
     if(!canvas)return;
-    var ctx,dpr,W,H,flakes=[],extras=[],running=true,last=0,caneImg=[],giftImg=[];
+    var ctx,dpr,W,H,flakes=[],extras=[],running=!stat,last=0,caneImg=[],giftImg=[];
+    function rr(g,x,y,w,h,r){if(g.roundRect){g.beginPath();g.roundRect(x,y,w,h,r);g.fill();}else g.fillRect(x,y,w,h);}
     function makeCane(flip){
-      var c=document.createElement('canvas');c.width=36;c.height=64;var g=c.getContext('2d');
-      g.translate(18,2);if(flip)g.scale(-1,1);g.lineCap='round';g.lineJoin='round';g.lineWidth=12;
-      g.strokeStyle='#f7f7f7';g.beginPath();g.moveTo(0,58);g.lineTo(0,20);g.quadraticCurveTo(0,4,16,4);g.quadraticCurveTo(28,4,28,18);g.stroke();
-      g.strokeStyle='#c41e3a';g.setLineDash([5,6]);g.lineWidth=12;g.beginPath();g.moveTo(0,58);g.lineTo(0,20);g.quadraticCurveTo(0,4,16,4);g.quadraticCurveTo(28,4,28,18);g.stroke();
+      var c=document.createElement('canvas');c.width=48;c.height=88;var g=c.getContext('2d');
+      g.translate(16,4);if(flip)g.scale(-1,1);
+      g.lineCap='round';g.lineJoin='round';
+      g.shadowColor='rgba(40,24,16,.16)';g.shadowBlur=3;g.shadowOffsetY=1;
+      g.lineWidth=8;
+      g.strokeStyle='#F4EDE0';
+      g.beginPath();g.moveTo(0,76);g.lineTo(0,24);g.quadraticCurveTo(0,6,16,6);g.quadraticCurveTo(28,6,28,22);g.stroke();
+      g.shadowColor='transparent';
+      g.strokeStyle='#7A1E2B';g.setLineDash([4,5]);g.lineWidth=8;
+      g.beginPath();g.moveTo(0,76);g.lineTo(0,24);g.quadraticCurveTo(0,6,16,6);g.quadraticCurveTo(28,6,28,22);g.stroke();
       return c;
     }
-    function makeGift(box,rib,lid){
-      var c=document.createElement('canvas');c.width=44;c.height=44;var g=c.getContext('2d');
-      g.fillStyle=box;g.fillRect(8,16,28,22);g.strokeStyle='rgba(0,0,0,.12)';g.strokeRect(8,16,28,22);
-      g.fillStyle=lid;g.fillRect(6,12,32,8);
-      g.fillStyle=rib;g.fillRect(19,12,6,26);g.fillRect(8,23,28,5);
-      g.beginPath();g.moveTo(22,16);g.bezierCurveTo(10,2,8,16,22,16);g.bezierCurveTo(36,2,38,16,22,16);g.fillStyle=rib;g.fill();
+    function makeGift(box,lid){
+      var gold='#C9A24A',c=document.createElement('canvas');c.width=64;c.height=64;var g=c.getContext('2d');
+      g.shadowColor='rgba(40,24,16,.18)';g.shadowBlur=4;g.shadowOffsetY=1;
+      g.fillStyle=box;rr(g,12,22,40,30,4);
+      g.shadowColor='transparent';
+      g.fillStyle=lid;rr(g,10,17,44,10,3);
+      g.fillStyle=gold;g.fillRect(29,17,6,35);g.fillRect(12,32,40,5);
+      g.beginPath();g.moveTo(32,20);g.bezierCurveTo(16,4,14,22,32,20);g.bezierCurveTo(50,4,52,22,32,20);g.fill();
+      g.beginPath();g.arc(32,20,3.2,0,6.28);g.fill();
       return c;
     }
     caneImg=[makeCane(0),makeCane(1)];
-    giftImg=[makeGift('#1e6b3c','#d4a017','#258a4a'),makeGift('#b71c2c','#e8c56b','#d32f2f'),makeGift('#c9a227','#b71c2c','#e0b93a')];
+    giftImg=[makeGift('#1A3D2C','#234A36'),makeGift('#7A1E2B','#8C2A38'),makeGift('#F3E6C8','#F7F0DE')];
+    function driftY(){return H-(W<700?22:34)-6;}
+    function safeX(){return W<700?(18+Math.random()*Math.max(30,W-150)):(48+Math.random()*(W-96));}
     function reset(){
       dpr=Math.min(window.devicePixelRatio||1,2);
       W=canvas.clientWidth||window.innerWidth;H=canvas.clientHeight||window.innerHeight;
       canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
       ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
-      var mobile=W<700,nf=mobile?22:48,nc=mobile?2:5,ng=mobile?2:4;
+      var mobile=W<700,nf=mobile?14:28,nc=mobile?1:3,ng=mobile?2:3;
       flakes=[];extras=[];
-      for(var i=0;i<nf;i++)flakes.push({x:Math.random()*W,y:Math.random()*H,r:1.4+Math.random()*2.8,vy:12+Math.random()*28,amp:8+Math.random()*22,per:2+Math.random()*3,ph:Math.random()*6.28,a:.55+Math.random()*.4});
-      for(var i=0;i<nc;i++)extras.push({x:Math.random()*W,y:Math.random()*H,vy:18+Math.random()*22,vx:(Math.random()-.5)*16,rot:Math.random()*6.28,vr:(Math.random()-.5)*.4,img:caneImg[i%caneImg.length],s:.85+Math.random()*.4});
-      for(var i=0;i<ng;i++)extras.push({x:Math.random()*W,y:Math.random()*H,vy:16+Math.random()*20,vx:(Math.random()-.5)*12,rot:Math.random()*6.28,vr:(Math.random()-.5)*.3,img:giftImg[i%giftImg.length],s:.8+Math.random()*.4});
+      for(var i=0;i<nf;i++){
+        flakes.push({x:Math.random()*W,y:Math.random()*H,r:.7+Math.random()*2.6,vy:6+Math.random()*10,amp:6+Math.random()*16,per:1.2+Math.random()*2,ph:Math.random()*6.28,a:.22+Math.random()*.3,kind:Math.random()>.62?'star':'dot'});
+      }
+      function extra(img,s,rest){
+        extras.push({x:safeX(),y:rest?driftY():(-24-Math.random()*90),vy:rest?0:(5.5+Math.random()*6.5),vx:rest?0:((Math.random()-.5)*5),rot:(Math.random()-.5)*.35,vr:rest?0:((Math.random()-.5)*.06),img:img,s:s,resting:!!rest});
+      }
+      for(var i=0;i<nc;i++)extra(caneImg[i%caneImg.length],.72+Math.random()*.18,stat||i===0);
+      for(var i=0;i<ng;i++)extra(giftImg[i%giftImg.length],.62+Math.random()*.16,stat||i===0);
+      var resters=[],i;for(i=0;i<extras.length;i++)if(extras[i].resting)resters.push(extras[i]);
+      var n=resters.length,margin=W<700?28:90,avoid=W<700?130:0,usable=Math.max(80,W-margin*2-avoid);
+      for(i=0;i<n;i++)resters[i].x=margin+usable*(i+.5)/Math.max(1,n);
+    }
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<flakes.length;i++){
+        var f=flakes[i],x=f.x+Math.sin(f.ph)*f.amp;
+        ctx.save();ctx.translate(x,f.y);ctx.globalAlpha=f.a;
+        if(f.kind==='star'){
+          ctx.rotate(f.ph*.12);ctx.beginPath();
+          for(var k=0;k<6;k++){var a=k*Math.PI/3;ctx.moveTo(0,0);ctx.lineTo(Math.cos(a)*f.r*2.1,Math.sin(a)*f.r*2.1);}
+          ctx.strokeStyle='rgba(255,255,255,'+Math.min(1,f.a+ .15)+')';ctx.lineWidth=.7;ctx.lineCap='round';ctx.stroke();
+        }else{
+          ctx.beginPath();ctx.fillStyle='rgba(255,255,255,1)';ctx.arc(0,0,f.r,0,6.28);ctx.fill();
+        }
+        ctx.restore();
+      }
+      for(var i=0;i<extras.length;i++){
+        var e=extras[i];
+        ctx.save();ctx.translate(e.x,e.y);ctx.rotate(e.rot);ctx.scale(e.s,e.s);ctx.globalAlpha=.9;ctx.drawImage(e.img,-e.img.width/2,-e.img.height/2);ctx.restore();
+      }
     }
     function frame(ts){
       if(!running)return;
       if(!last)last=ts;
       var dt=Math.min(.05,(ts-last)/1000);last=ts;
-      ctx.clearRect(0,0,W,H);
+      var lim=driftY();
       for(var i=0;i<flakes.length;i++){
-        var f=flakes[i];f.y+=f.vy*dt;f.ph+=dt*f.per;var x=f.x+Math.sin(f.ph)*f.amp;
-        if(f.y>H+6){f.y=-6;f.x=Math.random()*W;}
-        ctx.beginPath();ctx.fillStyle='rgba(255,255,255,'+f.a+')';ctx.arc(x,f.y,f.r,0,6.28);ctx.fill();
+        var f=flakes[i];f.y+=f.vy*dt;f.ph+=dt*f.per;
+        if(f.y>H+8){f.y=-8;f.x=Math.random()*W;}
       }
       for(var i=0;i<extras.length;i++){
-        var e=extras[i];e.y+=e.vy*dt;e.x+=e.vx*dt;e.rot+=e.vr*dt;
-        if(e.y>H+40){e.y=-40;e.x=Math.random()*W;}
-        if(e.x<-40)e.x=W+40;if(e.x>W+40)e.x=-40;
-        ctx.save();ctx.translate(e.x,e.y);ctx.rotate(e.rot);ctx.scale(e.s,e.s);ctx.globalAlpha=.8;ctx.drawImage(e.img,-e.img.width/2,-e.img.height/2);ctx.restore();
+        var e=extras[i];
+        if(e.resting)continue;
+        e.y+=e.vy*dt;e.x+=e.vx*dt;e.rot+=e.vr*dt;
+        if(e.x<16){e.x=16;e.vx=Math.abs(e.vx)*.4;}
+        if(e.x>W-16){e.x=W-16;e.vx=-Math.abs(e.vx)*.4;}
+        if(e.y>=lim){e.y=lim;e.vy=0;e.vx=0;e.vr=0;e.resting=true;}
       }
+      draw();
       requestAnimationFrame(frame);
     }
-    window.addEventListener('resize',reset,{passive:true});
+    window.addEventListener('resize',function(){reset();if(stat)draw();},{passive:true});
     document.addEventListener('visibilitychange',function(){
+      if(stat)return;
       if(document.hidden){running=false;last=0;}
       else{running=true;requestAnimationFrame(frame);}
     });
-    reset();requestAnimationFrame(frame);
+    reset();
+    if(stat)draw();
+    else requestAnimationFrame(frame);
   }
   var SNOWCAP='<div class="xm-cap" aria-hidden="true"></div>';
-  var DRIFT="<svg class=\"xm-drift-svg\" viewBox=\"0 0 1200 80\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path fill=\"#E4EEF7\" d=\"M0 80V38C90 18 170 58 270 36C390 12 480 52 600 30C740 6 840 50 960 26C1060 10 1140 34 1200 20V80Z\"/><path fill=\"#F8FBFF\" d=\"M0 80V54C110 36 210 66 330 50C470 30 580 68 720 52C860 34 980 66 1200 42V80Z\"/></svg>";
-  var HERO_SNOW="<svg class=\"xm-hero-snow\" viewBox=\"0 0 1200 90\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path fill=\"#EEF5FB\" d=\"M0 90V44C140 20 240 62 380 40C520 16 640 58 780 36C920 14 1060 48 1200 28V90Z\"/><path fill=\"#F8FBFF\" d=\"M0 90V62C130 46 250 76 400 58C560 36 700 78 860 60C1000 44 1100 70 1200 54V90Z\"/></svg>";
-  var HOLLY_L="<svg class=\"xm-holly l\" viewBox=\"0 0 120 110\" aria-hidden=\"true\"><path fill=\"#1a6b3c\" d=\"M22 48c-8-22 10-40 28-22 2-24 28-28 24 0 18-16 40-2 22 18 22 2 22 28 0 22 14 18-8 36-22 14-6 22-30 18-20-4-18 16-36-2-22-16-22 4-26-18-10-12z\"/><path fill=\"#0e4a28\" d=\"M38 44l12 10-2 8-10-8 6-10zm28-8l10 12 8-2-6 12-12-8zm18 22l-2 12 8 6-14-4-4-10zm-20 20l-12 6 2 10 12-8-2-8z\"/><circle cx=\"58\" cy=\"58\" r=\"7.5\" fill=\"#b71c2c\"/><circle cx=\"71\" cy=\"52\" r=\"6.2\" fill=\"#9B1B2E\"/><circle cx=\"66\" cy=\"68\" r=\"6\" fill=\"#c41e3a\"/><circle cx=\"58\" cy=\"55\" r=\"2\" fill=\"#f3d0d4\" opacity=\".55\"/></svg>";
-  var HOLLY_R="<svg class=\"xm-holly r\" viewBox=\"0 0 120 110\" aria-hidden=\"true\"><path fill=\"#1a6b3c\" d=\"M22 48c-8-22 10-40 28-22 2-24 28-28 24 0 18-16 40-2 22 18 22 2 22 28 0 22 14 18-8 36-22 14-6 22-30 18-20-4-18 16-36-2-22-16-22 4-26-18-10-12z\"/><path fill=\"#0e4a28\" d=\"M38 44l12 10-2 8-10-8 6-10zm28-8l10 12 8-2-6 12-12-8zm18 22l-2 12 8 6-14-4-4-10zm-20 20l-12 6 2 10 12-8-2-8z\"/><circle cx=\"58\" cy=\"58\" r=\"7.5\" fill=\"#b71c2c\"/><circle cx=\"71\" cy=\"52\" r=\"6.2\" fill=\"#9B1B2E\"/><circle cx=\"66\" cy=\"68\" r=\"6\" fill=\"#c41e3a\"/><circle cx=\"58\" cy=\"55\" r=\"2\" fill=\"#f3d0d4\" opacity=\".55\"/></svg>";
-  function staticFlakes(){
-    var L=document.createElement('div');L.className='xm-static-flakes';L.setAttribute('aria-hidden','true');
-    var spots=[[8,12],[22,28],[40,10],[58,22],[73,8],[88,26],[15,48],[81,52]];
-    var h='';for(var i=0;i<spots.length;i++)h+='<span style="left:'+spots[i][0]+'%;top:'+spots[i][1]+'%">'+flakeSVG(i%3?14:18,'#dce8f2')+'</span>';
-    L.innerHTML=h;return L;
-  }
+  var DRIFT='<svg class="xm-drift-svg" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path fill="#EEF2F6" fill-opacity=".65" d="M0 60V30C160 16 300 42 450 28C620 12 780 40 940 26C1060 16 1140 26 1200 20V60Z"/><path fill="#F7F9FB" fill-opacity=".8" d="M0 60V40C200 28 360 50 540 38C740 24 940 50 1200 34V60Z"/></svg>';
+  var HERO_SNOW='<svg class="xm-hero-snow" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#EEF3F7" fill-opacity=".55" d="M0 70V36C180 18 340 50 520 32C720 12 920 44 1200 26V70Z"/><path fill="#F8FAFC" fill-opacity=".75" d="M0 70V48C200 36 400 60 620 46C860 30 1040 56 1200 44V70Z"/></svg>';
+  var HOLLY_L='<svg class="xm-holly l" viewBox="0 0 120 110" aria-hidden="true"><path fill="#1A3D2C" d="M22 48c-8-22 10-40 28-22 2-24 28-28 24 0 18-16 40-2 22 18 22 2 22 28 0 22 14 18-8 36-22 14-6 22-30 18-20-4-18 16-36-2-22-16-22 4-26-18-10-12z"/><circle cx="58" cy="58" r="5.5" fill="#7A1E2B"/><circle cx="70" cy="53" r="4.5" fill="#6B1826"/><circle cx="65" cy="66" r="4.2" fill="#8C2A38"/></svg>';
+  var HOLLY_R=HOLLY_L.replace('xm-holly l','xm-holly r');
   function go(){
     var b=document.createElement('div');b.className='xm-banner';b.setAttribute('role','note');
-    b.innerHTML=flakeSVG(16,'#E8C56B')+'<span>Merry Christmas<span class="xm-from"> from Heather&#39;s Simply Clean Co.</span></span>'+flakeSVG(16,'#E8C56B')+SNOWCAP;
+    b.innerHTML='<span class="xm-orn" aria-hidden="true">'+ornament()+'</span><span class="xm-banner-text"><span class="xm-title">Merry Christmas</span><span class="xm-from">from Heather&#39;s Simply Clean Co.</span></span><span class="xm-orn" aria-hidden="true">'+ornament()+'</span>'+SNOWCAP;
     document.body.insertBefore(b,document.body.firstChild);
     var nav=document.querySelector('.nav');
     if(nav){
@@ -117,10 +155,9 @@
       foot.insertBefore(fs,foot.firstChild);
     }
     var fx=document.createElement('div');fx.className='xm-fx';fx.setAttribute('aria-hidden','true');
-    fx.innerHTML='<div class="xm-drift">'+DRIFT+'</div>'+(reduce?'':'<canvas class="xm-canvas"></canvas>');
+    fx.innerHTML='<div class="xm-drift">'+DRIFT+'</div><canvas class="xm-canvas"></canvas>';
     document.body.appendChild(fx);
-    if(reduce)document.body.appendChild(staticFlakes());
-    else startSnow(fx.querySelector('.xm-canvas'));
+    startSnow(fx.querySelector('.xm-canvas'),reduce);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
 })();
